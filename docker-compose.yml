@@ -1,0 +1,29 @@
+version: '3.9'
+
+
+services:
+  web:
+    build: ./web
+    tty: true
+    ports:
+      - 8080:8080
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    volumes:
+      - ./web:/app
+
+  db:
+    build: ./db
+    tty: true
+    ports:
+      - 3306:3306
+    env_file:
+      - ./.env
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
+    driver: local
